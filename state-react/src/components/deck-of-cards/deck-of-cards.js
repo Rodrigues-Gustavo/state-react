@@ -6,9 +6,25 @@ async function createDeck() {
     return deck.deck_id
 }
 
-async function getCards(deckId){
+async function getCards(deckId) {
     const response = await fetch(`https://deckofcardsapi.com/api/deck/${deckId}/draw/?count=52`)
     return await response.json()
+}
+
+const CardsList = (props) => {
+    return (
+        <ul>
+            {
+                props.cards.map((card, index) => {
+                    return (
+                        <li key={index}>
+                            <img src={card.image} alt={card.value} />
+                        </li>
+                    )
+                })
+            }
+        </ul>
+    )
 }
 
 const DeckOfCards = () => {
@@ -28,19 +44,9 @@ const DeckOfCards = () => {
         fetchData()
     }, [])
 
-    return(
+    return (
         <section>
-            <ul>
-                {
-                    deck.cards.map((card,index) => {
-                        return (
-                            <li key={index}>
-                                <img src={card.image} alt={card.value}/>
-                            </li>
-                        )
-                    })
-                }
-            </ul>
+            {deck.cards.length > 0 ? <CardsList cards={deck.cards}/> : "Nenhuma carta foi encontrada!!!"}
         </section>
     )
 }
@@ -64,19 +70,19 @@ const DeckOfCards = () => {
 
 //     render(){
 //         return (
-            // <section>
-            //     <ul>
-            //         {
-            //             this.state.cards.map((card,index) => {
-            //                 return (
-            //                     <li key={index}>
-            //                         <img src={card.image} alt={card.value}/>
-            //                     </li>
-            //                 )
-            //             })
-            //         }
-            //     </ul>
-            // </section>
+// <section>
+//     <ul>
+//         {
+//             this.state.cards.map((card,index) => {
+//                 return (
+//                     <li key={index}>
+//                         <img src={card.image} alt={card.value}/>
+//                     </li>
+//                 )
+//             })
+//         }
+//     </ul>
+// </section>
 //         )
 //     }
 // }
